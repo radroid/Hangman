@@ -1,0 +1,1 @@
+from .HangmanGame import HangmanGame
