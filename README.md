@@ -12,7 +12,7 @@
 [![Open Pull Requests](https://img.shields.io/github/issues-pr/radroid/Hangman?style=for-the-badge)](https://github.com/radroid/Hangman/pulls) 
 [![Closed Pull Requests](https://img.shields.io/github/issues-pr-closed/radroid/Hangman?style=for-the-badge)](https://github.com/radroid/Hangman/pulls?q=is%3Apr+is%3Aclosed)
 
-![hangman-terminal-run](images/hangman-terminal.gif)
+![hangman-terminal-run](images/hangman-terminal-2.gif)
 
 **Watch** :eye: repository to get notified on updates. (Maybe :star: and visit back)
 
