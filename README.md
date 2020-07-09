@@ -1,5 +1,5 @@
 # Hangman
-> My **first python** project.  :flushed:
+> My **first python** project.  :nerd_face:
 > Includes a package built for all methods required to build the game.
 
 > One can create a simple version of hangman (using the package) with **less than 10 lines of code**
@@ -14,7 +14,7 @@
 
 ![hangman-terminal-run](images/hangman-terminal.gif)
 
-**Watch** repository to get notified on updates. (Maybe :star: and visit back)
+**Watch** :eye: repository to get notified on updates. (Maybe :star: and visit back)
 
 ## Support
 Follow and Reach out to me one of the following places!
