@@ -3,7 +3,7 @@ import random as r
 
 class HangmanGame:
     """
-    GamePlay class to manage the variables and methods required to play play Hangman.
+    GamePlay class to manage the variables and methods required to play Hangman.
 
     Attributes:
         game_class_number (class int): Counts the number of classes created (helps identity player).
@@ -19,12 +19,14 @@ class HangmanGame:
         hangman (dict): key - named parts of the hangman, value - named parts of the hangman
                         (updated for incorrect guesses).
         game_number (int): Stores the game_class_number.
+        status (str): Stores the state of the game.
     """
 
     game_class_number = 0
 
     def __init__(self):
         """ Initialise GamePlay class. """
+
         self.words_played = []
         self.words_guessed = []
         self.total_points = 0
@@ -36,20 +38,25 @@ class HangmanGame:
         self.hangman = {'head': ' ', 'body': ' ', 'right_hand': ' ',
                         'left_hand': ' ', 'right_leg': ' ', 'left_leg': ' '}
         self.game_number = HangmanGame.game_class_number
+        self.status = ''
         HangmanGame.game_class_number += 1
 
     def set_word(self):
         # TODO: Improve the method to selects from a .txt file.
         """ Selects a word from a list of words. This word is to be guessed in the game. """
+
         word_list = ['python', 'java', 'kotlin', 'javascript']
-        self.word = word_list[r.randint(0, 3)]
+        self.word = word_list[r.randint(0, len(word_list) - 1)]
         self.word_display = ['_' for _ in self.word]
+        self.set_status()
 
     def guess_letter(self):
         # TODO: a method to update guessed_letters, correct_guesses, incorrect_guesses, Hangman.
         """ The method updates appropriate variables after an input from the console (user). """
+
         guess = self.get_valid_guess()
         self.guessed_letters.append(guess)
+
         if guess in self.word:
             self.correct_guesses.append(guess)
             self.update_word_display(guess)
@@ -57,8 +64,11 @@ class HangmanGame:
             self.incorrect_guesses.append(guess)
             self.update_hangman()
 
+        self.set_status()
+
     def get_valid_guess(self):
         # TODO: a method to return a valid guess from user input.
+        # TODO: check for blank input.
         """
         The method takes a single alphabet from the console (user), checks if it is not already input and returns it.
 
@@ -67,6 +77,7 @@ class HangmanGame:
         Returns:
             guess (char): A valid input from the console (user).
         """
+
         is_valid = False
         is_new_guess = False
         guess = ''
@@ -94,10 +105,10 @@ class HangmanGame:
         Returns: None
         """
         # TODO: A method that updates the variable word_display after user correctly guesses a letter in the word.
+
         for i, char in enumerate(list(self.word)):
             if guess == char:
                 self.word_display[i] = char
-        pass
 
     def update_hangman(self):
         # TODO: Define a method to update the position of hangman, make use of incorrect_guesses
@@ -146,11 +157,27 @@ class HangmanGame:
         # TODO: a method to initialise variables before starting the next game
         pass
 
+    def set_status(self):
+        """ Updates the state of the game if ended. """
+
+        if len(self.incorrect_guesses) >= len(self.hangman):
+            self.status = 'lost'
+        elif self.word == ''.join(self.word_display):
+            self.status = 'won'
+        else:
+            self.status = 'guessing'
+
+    def get_status(self):
+        """
+        Returns the status of the game.
+
+        Args: None
+        Returns: status (str) - 'won', 'lost' or 'guessing'
+        """
+        return self.status
+
     def get_word(self):
         return self.word
-
-    def get_incorrect_guesses(self):
-        return len(self.incorrect_guesses)
 
 
 if __name__ == '__main__':

@@ -4,12 +4,12 @@ print('\n\nH A N G M A N\n')
 
 game = HangmanGame()
 game.set_word()
+status = game.get_status() == 'guessing'
 
-while game.get_incorrect_guesses() < 6:
-
+while status:
     game.print_hangman()
     game.guess_letter()
-
+    status = game.get_status() == 'guessing'
 
 game.print_hangman()
 print("\n\nThanks for playing!")

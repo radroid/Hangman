@@ -1,8 +1,8 @@
-import unittest
+from unittest import mock, TestCase, main
 from ..hangman_pack import HangmanGame
 
 
-class TestGamePlay(unittest.TestCase):
+class TestGamePlay(TestCase):
 
     def setUp(self):
         """ Creates GamePlay class for all the unittests. """
@@ -16,6 +16,9 @@ class TestGamePlay(unittest.TestCase):
         self.assertEqual(len(self.game_one.word_display), len(self.game_one.word), "Length of 'word_display' and "
                                                                                    "'word' do not match. ")
         self.assertIn('_', self.game_one.word_display, "'word_display' does not contain dashes: '_'")
+
+    def test_word_display(self):
+        pass
 
     def test_guess_letter(self):
         # TODO: write a tests to check if update guessed_letters, correct_guesses, incorrect_guesses, Hangman are
@@ -50,6 +53,22 @@ class TestGamePlay(unittest.TestCase):
         self.game_one.update_hangman()
         self.assertEqual(self.game_one.hangman.get('left_hand'), '\\', "Hangman's left_hand was not updated.")
 
+    def test_get_status(self):
+        self.game_one.set_word()
+        self.game_one.word = 'hello'
+        self.assertEqual(self.game_one.get_status(), 'guessing', "Initial state of the game is incorrect")
+        self.game_one.word_display = ['h', 'e', 'l', 'l', 'o']
+        self.game_one.set_status()
+        self.assertEqual(self.game_one.get_status(), 'won', "State of a game won is incorrect")
+
+        self.game_two.set_word()
+        self.game_two.word = 'world'
+        self.assertEqual(self.game_two.get_status(), 'guessing', "Initial state of the game is incorrect")
+        self.game_two.word_display = ['w', 'o', 'r', 'l', '_']
+        self.game_two.incorrect_guesses = ['i', 'p', 't', 'q', 's', 'n']
+        self.game_two.set_status()
+        self.assertEqual(self.game_two.get_status(), 'lost', "State of a game lost is incorrect")
+
     def test_update_points(self):
         # TODO: Define a method to update total_points
         pass
@@ -68,4 +87,4 @@ class TestGamePlay(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    main()
