@@ -12,5 +12,13 @@ while status:
     status = game.get_status() == 'guessing'
 
 game.print_hangman()
+
+if status == 'won':
+    print('Congratulations! You guessed the word correctly.')
+else:
+    print('Better luck next time. :(')
+
+print(f'\nPoints scored: {game.update_points()}')
+
 print("\n\nThanks for playing!")
 print("We'll see how well you did in the next stage")
