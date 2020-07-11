@@ -51,7 +51,6 @@ class HangmanGame:
         self.set_status()
 
     def guess_letter(self):
-        # TODO: a method to update guessed_letters, correct_guesses, incorrect_guesses, Hangman.
         """ The method updates appropriate variables after an input from the console (user). """
 
         guess = self.get_valid_guess()
@@ -67,8 +66,6 @@ class HangmanGame:
         self.set_status()
 
     def get_valid_guess(self):
-        # TODO: a method to return a valid guess from user input.
-        # TODO: check for blank input.
         """
         The method takes a single alphabet from the console (user), checks if it is not already input and returns it.
 
@@ -84,13 +81,17 @@ class HangmanGame:
 
         while not is_valid or not is_new_guess:
             guess = input('Input a letter: ').strip()
-            is_valid = len(guess) == 1 and guess.isalpha()  # checks if the input is a single character and an alphabet.
-            is_new_guess = guess not in self.guessed_letters  # checks if the alphabet is already guessed.
+
+            # Check if the input is a single character and an alphabet.
+            is_valid = len(guess) == 1 and guess.isalpha()
+
+            # Check if the alphabet is already guessed.
+            is_new_guess = guess not in self.guessed_letters
 
             if not is_valid:
-                print(f'{guess} is not a valid input. Please enter a single alphabet.')
+                print(f'"{guess}" is not a valid input. Please enter a single alphabet.')
             elif not is_new_guess:
-                print(f'{guess} has already been input before. Please enter a letter not guessed already.')
+                print(f'"{guess}" has already been input before. Please enter a letter not guessed already.')
 
         return guess.lower()
 
@@ -104,14 +105,12 @@ class HangmanGame:
 
         Returns: None
         """
-        # TODO: A method that updates the variable word_display after user correctly guesses a letter in the word.
 
         for i, char in enumerate(list(self.word)):
             if guess == char:
                 self.word_display[i] = char
 
     def update_hangman(self):
-        # TODO: Define a method to update the position of hangman, make use of incorrect_guesses
         """ Updates the position of the hangman for every incorrect guess by the user """
         hangman_parts = ['O', '|', '/', '\\', '/', '\\']  # Symbols to complete hangman's body
         index = len(self.incorrect_guesses) - 1           # Index to update the last incorrect guess
@@ -119,7 +118,8 @@ class HangmanGame:
         self.hangman.update(update_statement)
 
     def print_hangman(self):
-        # TODO: Define a method to print the current position, i.e. Hangman + half-hidden word
+        # TODO: improve method to make printing to console more modular and flexible
+        # TODO: separate hangman art from word.
         """ Prints the current position of the hangman. """
 
         h = self.hangman
@@ -136,20 +136,89 @@ class HangmanGame:
 
         print(hangman_pole.format(h.get('head'), h.get('right_hand'), h.get('body'),
                                   h.get('left_hand'), h.get('right_leg'), h.get('left_leg')))
+
         print('\t' + ' '.join(self.word_display) + '\n')
         print(f'Letters guessed: {", ".join(self.guessed_letters)}')
 
     def update_points(self):
-        # TODO: Define a method to update total_points
-        pass
+        """
+        Updates the total_points. The points system is slightly complex. The rules that govern it are as follows:
+
+        Summary:
+            For every letter:
+            +1 = common guessed
+            -2 = common not guessed (only if 'lost')
+            +2 = un-common guessed
+            -1 = un-common not guessed (only if 'lost')
+            +1 = every un-used guess. (only if 'won')
+
+            overall:
+                'won' -> positive
+                'lost' -> max 0 or negative
+
+        Notes:
+            You get positive points for correctly guessing the word and negative for not being able to guess it.
+            Points are based on the letters in the word to be guessed and number of incorrect guesses.
+
+            If you correctly guess, i.e. 'won':
+            - One point is awarded for every common letter in the word.
+            - Two points are awarded for every un-common letter in the word.
+            - One point for each guess left. eg. if 3 guesses left, (points+3)
+
+            If you fail to guess the word, i.e. 'lost':
+            - First points are awarded based on what you have guessed (same as 'won')
+            - For the letters that were not guess:
+             * Two points are deducted for every common letter in the word not guessed.
+             * One point is deducted for every un-common letter in the word not guessed.
+            - If the sum of positive and negative points is more than 0, points = 0.
+            - else negative score is added used.
+
+            Points for individual games are added to total_points.
+
+        """
+
+        list_of_common_char = 'e-t-a-o-i-n-s-h-r-d-l-u'.split('-')
+        points = 0
+        self.set_status()
+
+        if self.get_status() == 'won':
+            for char in self.correct_guesses:
+                points += 1 if (char in list_of_common_char) else 2
+            points += len(self.hangman) - len(self.incorrect_guesses)
+
+        elif self.get_status() == 'lost':
+            positive_points = 0
+            negative_points = 0
+
+            # Creating a set of letters that were not guessed.
+            missed_letters = set(self.word).difference(set(self.correct_guesses))
+
+            for char in missed_letters:
+                negative_points += 2 if (char in list_of_common_char) else 1
+            for char in self.correct_guesses:
+                positive_points += 1 if (char in list_of_common_char) else 2
+            points = 0 if positive_points >= negative_points else (positive_points - negative_points)
+
+        self.total_points += points
+
+        return points
+
+    def get_total_points(self):
+        """
+        Returns the total_points of all the games played till now.
+
+        Args: None
+        Returns: total_points (int) - Number of points scored by the player till now.
+        """
+        return self.total_points
 
     def update_list_of_words(self):
         # TODO: Define a method to add words to words_played and words_guessed
         pass
 
     def initialise_all(self):
-        """ Resets all the variables """
         # TODO: a method to initialise all variables
+        """ Resets all the variables """
         self.__init__()
         pass
 
@@ -174,16 +243,8 @@ class HangmanGame:
         Args: None
         Returns: status (str) - 'won', 'lost' or 'guessing'
         """
+
         return self.status
 
     def get_word(self):
         return self.word
-
-
-if __name__ == '__main__':
-    game = HangmanGame()
-    game.set_word()
-    game.print_hangman()
-    for i in range(10):
-        game.guess_letter()
-        game.print_hangman()
