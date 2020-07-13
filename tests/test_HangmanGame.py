@@ -1,5 +1,5 @@
 from unittest import mock, TestCase, main
-from ..hangman_pack import HangmanGame
+from hangman_pack import HangmanGame
 import io
 
 
