@@ -1,6 +1,6 @@
 # Hangman
 > My **first python** project.  :nerd_face:
-> Includes a package built for all methods required to build the game.
+> Includes a package - '**hangman_pack**' - with all methods required to build the game.
 
 > One can create a simple version of hangman (using the package) with **less than 10 lines of code**
 
