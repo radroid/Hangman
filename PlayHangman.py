@@ -6,6 +6,7 @@ game = HangmanGame()
 game.set_word()
 status = game.get_status() == 'guessing'
 
+
 while status:
     game.print_hangman()
     game.guess_letter()

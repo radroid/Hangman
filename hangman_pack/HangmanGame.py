@@ -3,11 +3,9 @@ import random as r
 
 class HangmanGame:
     """
-    GamePlay class to manage the variables and methods required to play Hangman.
+    HangmanGame class manages variables and methods required to play Hangman.
 
     Attributes:
-        game_class_number (class int): Counts the number of classes created (helps identity player).
-
         words_played (list of str): A list of words player attempted to guess.
         words_guessed (list of str): A list of words guessed correctly by the player.
         total_points (int): Keeps a count of the number of points for the player.
@@ -18,17 +16,29 @@ class HangmanGame:
         incorrect_guesses (list of char): A list of letters guessed AND NOT present in the word.
         hangman (dict): key - named parts of the hangman, value - named parts of the hangman
                         (updated for incorrect guesses).
-        game_number (int): Stores the game_class_number.
+        game_number (int): Stores the game_object_number.
         status (str): Stores the state of the game.
+
+        game_object_number (class int): Counts the number of classes created (helps identity player).
     """
 
-    game_class_number = 0
+    game_object_number = 1
 
-    def __init__(self):
-        """ Initialise GamePlay class. """
+    def __init__(self, words_played=None, words_guessed=None):
+        """
+        Initialise GamePlay class.
 
-        self.words_played = []
-        self.words_guessed = []
+        Args:
+             words_played (set of str): number of words already played.
+             words_guessed (set of str): number of words guessed correctly out of the words played.
+
+        """
+        if words_guessed is None:
+            words_guessed = set({})
+        if words_played is None:
+            words_played = set({})
+        self.words_played = words_played
+        self.words_guessed = words_guessed
         self.total_points = 0
         self.word = ''
         self.word_display = []
@@ -37,9 +47,9 @@ class HangmanGame:
         self.incorrect_guesses = []
         self.hangman = {'head': ' ', 'body': ' ', 'right_hand': ' ',
                         'left_hand': ' ', 'right_leg': ' ', 'left_leg': ' '}
-        self.game_number = HangmanGame.game_class_number
         self.status = ''
-        HangmanGame.game_class_number += 1
+        self.game_number = self.game_object_number
+        self.increment_game_object_number()
 
     def set_word(self):
         # TODO: Improve the method to selects from a .txt file.
@@ -49,6 +59,9 @@ class HangmanGame:
         self.word = word_list[r.randint(0, len(word_list) - 1)]
         self.word_display = ['_' for _ in self.word]
         self.set_status()
+
+    def get_word(self):
+        return self.word
 
     def guess_letter(self):
         """ The method updates appropriate variables after an input from the console (user). """
@@ -113,8 +126,8 @@ class HangmanGame:
     def update_hangman(self):
         """ Updates the position of the hangman for every incorrect guess by the user """
         hangman_parts = ['O', '|', '/', '\\', '/', '\\']  # Symbols to complete hangman's body
-        index = len(self.incorrect_guesses) - 1           # Index to update the last incorrect guess
-        update_statement = {list(self.hangman.keys())[index]: hangman_parts[index]} # Preparing entry for update
+        index = len(self.incorrect_guesses) - 1  # Index to update the last incorrect guess
+        update_statement = {list(self.hangman.keys())[index]: hangman_parts[index]}  # Preparing entry for update
         self.hangman.update(update_statement)
 
     def print_hangman(self):
@@ -212,22 +225,8 @@ class HangmanGame:
         """
         return self.total_points
 
-    def update_list_of_words(self):
-        # TODO: Define a method to add words to words_played and words_guessed
-        pass
-
-    def initialise_all(self):
-        # TODO: a method to initialise all variables
-        """ Resets all the variables """
-        self.__init__()
-        pass
-
-    def initialise_guesses(self):
-        # TODO: a method to initialise variables before starting the next game
-        pass
-
     def set_status(self):
-        """ Updates the state of the game if ended. """
+        """ Updates the status of the game if ended. """
 
         if len(self.incorrect_guesses) >= len(self.hangman):
             self.status = 'lost'
@@ -246,5 +245,25 @@ class HangmanGame:
 
         return self.status
 
-    def get_word(self):
-        return self.word
+    def __update_list_of_words(self):
+        """
+        Adds the word played to a set containing all the words played till now.
+        If the word is correctly guessed, the word is also added to another set containing
+        correctly guessed words.
+         """
+        self.words_played.add(self.word)
+        if self.status == 'won':
+            self.words_guessed.add(self.word)
+
+    def new_game(self):
+        """ Resets all the variables """
+        self.__update_list_of_words()
+        self.__init__(self.words_played, self.words_guessed)
+
+    @classmethod
+    def increment_game_object_number(cls):
+        cls.game_object_number += 1
+
+    @classmethod
+    def get_number_of_games_created(cls):
+        return cls.game_object_number

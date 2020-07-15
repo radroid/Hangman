@@ -1,1 +1,1 @@
-. # installing 'Hangman' package
+. # installing 'hangman' package
