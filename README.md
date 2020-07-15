@@ -4,7 +4,7 @@
 
 > One can create a simple version of hangman (using the package) with **less than 10 lines of code**
 
-> Tags: hangman, simple hangman, hangman package, game, game package, play hangman.
+> *Tags: hangman, simple hangman, hangman package, game, game package, play hangman.*
 
 ![Top Language](https://img.shields.io/github/languages/top/RajD007/Hangman?style=for-the-badge) 
 [![License](https://img.shields.io/github/license/RajD007/Hangman?style=for-the-badge)](https://github.com/RajD007/Hangman/blob/master/LICENSE) 
@@ -16,12 +16,48 @@
 
 **Watch** :eye: repository to get notified on updates. (Maybe :star: and visit back)
 
-## Support
+## SETUP
+### For a Mac/Linux User:
+
+> Refer to the image at the end of this section to verfiy each step.
+
+1. Download the latest [version of python](https://www.python.org/downloads/) on your computer.
+
+2. Open terminal.
+
+3. Navigate to the directory of your choice or continue with the Home directory.
+
+4. Clone this repository:
+
+```bash
+git clone https://github.com/radroid/Hangman.git
+```
+*Wait for the cloning to be complete.*
+
+5. Create a virtual environment to run the program.
+```bash
+python3 -m venv Hangman_venv
+source Hangman_venv/bin/activate
+```
+
+6. change directory, install dependencies and run program.
+```bash
+cd Hangman
+pip install -r requirements.txt
+python PlayHangman.py
+```
+
+**Setup example**
+
+![setup-example](images/setup-example.png)
+
+
+## SUPPORT
 Follow and Reach out to me one of the following places!
 
 ![Github Follow](https://img.shields.io/github/followers/RajD007?label=Follow&style=social) ![Twitter Follow](https://img.shields.io/twitter/follow/Raj_Dholakia001?label=Follow&style=social)
 
-## License
+## LICENSE
 [![License](https://img.shields.io/github/license/RajD007/Hangman?style=for-the-badge)](https://github.com/RajD007/Hangman/blob/master/LICENSE)
 
 **[MIT license](https://opensource.org/licenses/MIT)**
