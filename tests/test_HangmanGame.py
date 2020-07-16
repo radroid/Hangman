@@ -1,4 +1,6 @@
-from unittest import TestCase, main
+import io
+from itertools import dropwhile
+from unittest import TestCase, main, mock
 from hangman_pack import HangmanGame
 
 
@@ -10,13 +12,42 @@ class TestGamePlay(TestCase):
         HangmanGame.game_object_number = 1
         self.game_two = HangmanGame()
 
-    def test_set_word(self):
+    def test_is_valid_filename_NameError(self):
+        with self.assertRaises(NameError, msg='NameError was not thrown when an incorrect filename was input'):
+            HangmanGame(filename='word_bank')
+
+    def test_read_file_stats_FileFoundError(self):
+        with self.assertRaises(FileNotFoundError, msg='FileNotFoundError was not thrown when an incorrect '
+                                                      'filename was input'):
+            HangmanGame(filename='word_banker.txt')
+
+    def test_is_comment_true(self):
+        result = self.game_one.is_comment('# This is a comment')
+        self.assertEqual(True, result)
+
+    def test_is_comment_false(self):
+        result = self.game_one.is_comment('This is a not comment')
+        self.assertEqual(False, result)
+
+    def test_set_word_empty(self):
         """ Checks if the word is set correctly. """
         self.game_one.set_word()
         self.assertIsNotNone(self.game_one.word, 'Variable \'word\' is empty')
         self.assertEqual(len(self.game_one.word_display), len(self.game_one.word), 'Length of \'word_display\' and '
                                                                                    '\'word\' do not match. ')
         self.assertIn('_', self.game_one.word_display, '\'word_display\' does not contain dashes: \'_\'')
+
+    def test_set_word_error(self):
+        """ Checks if the correct error is raised. """
+        word_bank = []
+        with open(self.game_one.filename, 'r') as f:
+            for word in dropwhile(HangmanGame.is_comment, f):
+                word_bank.append(word)
+        self.game_one.words_played = word_bank
+        with mock.patch('sys.stdout', new=io.StringIO()) as stdout:
+            self.game_one.set_word()
+            self.assertEqual('Error: The word bank input by you is exhausted.\n', stdout.getvalue(),
+                             'UserWarning not raised')
 
     def test_word_display(self):
         pass
@@ -146,12 +177,12 @@ class TestGamePlay(TestCase):
         points = self.game_two.update_points()
         self.assertEqual(-5, points, f'Points for \'j_v_s_____\' should be -5 and not {points}')
 
-    def test_update_list_of_words_and_new_game(self):
+    def test_update_list_of_words_and_reset_game(self):
         self.game_one.set_word()
         self.game_one.word = 'hello'
         self.game_one.word_display = list('hello')
         self.game_one.set_status()
-        self.game_one.new_game()
+        self.game_one.reset_game()
         self.assertIn('hello', self.game_one.words_played, 'Word not present in words played set')
         self.assertIn('hello', self.game_one.words_guessed, 'Word not present in the correctly guessed set')
         self.assertEqual(2, self.game_one.game_number, 'The game class number is incorrect')
@@ -162,7 +193,7 @@ class TestGamePlay(TestCase):
         self.game_one.incorrect_guesses = ['n', 'o', 'l', 'q', 'b', 'y']
         self.game_one.correct_guesses = ['v', 'j', 's']
         self.game_one.set_status()
-        self.game_one.new_game()
+        self.game_one.reset_game()
         self.assertIn('javascript', self.game_one.words_played, 'Word not present in words played set')
         self.assertNotIn('javascript', self.game_one.words_guessed, 'Word not present in the correctly guessed set')
         self.assertIn('hello', self.game_one.words_played, 'Word not present in words played set')
