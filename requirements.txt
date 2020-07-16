@@ -1,1 +1,4 @@
 . # installing 'hangman' package
+pytest~=5.4.3
+hangman~=0.1.4
+setuptools~=47.3.1

@@ -1,7 +1,7 @@
 import random as r
 from itertools import dropwhile
 from time import time
-from os import path,getcwd
+from os import path
 
 
 class HangmanGame:
@@ -36,7 +36,7 @@ class HangmanGame:
         """
 
         if filename is None:
-            filename = path.dirname(__file__) + '/src/word_bank.txt'
+            filename = path.dirname(__file__) + '/../word_bank.txt'
 
         self.is_valid_filename(filename)
         self.filename = filename
@@ -131,12 +131,12 @@ class HangmanGame:
             word_bank = []
             with open(self.filename, 'r') as f:
                 for word in dropwhile(HangmanGame.is_comment, f):
-                    word_bank.append(word)
+                    word_bank.append(word[:-1])
 
             # Remove words that have already been guessed.
             word_bank = list(set(word_bank) - set(self.words_played))
             if len(word_bank) == 0:
-                raise UserWarning('The word bank input by you is exhausted.')
+                raise UserWarning('The word bank has been exhausted.')
 
             # Set the word to be guessed in this round.
             self.word = word_bank[r.randint(0, len(word_bank) - 1)]

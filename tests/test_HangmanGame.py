@@ -1,7 +1,8 @@
 import io
 from itertools import dropwhile
 from unittest import TestCase, main, mock
-from hangman_pack import HangmanGame
+from Hangman import HangmanGame
+import pytest
 
 
 class TestGamePlay(TestCase):
@@ -42,11 +43,12 @@ class TestGamePlay(TestCase):
         word_bank = []
         with open(self.game_one.filename, 'r') as f:
             for word in dropwhile(HangmanGame.is_comment, f):
-                word_bank.append(word)
+                word_bank.append(word[:-1])
         self.game_one.words_played = word_bank
+
         with mock.patch('sys.stdout', new=io.StringIO()) as stdout:
             self.game_one.set_word()
-            self.assertEqual('Error: The word bank input by you is exhausted.\n', stdout.getvalue(),
+            self.assertEqual('Error: The word bank has been exhausted.\n', stdout.getvalue(),
                              'UserWarning not raised')
 
     def test_word_display(self):

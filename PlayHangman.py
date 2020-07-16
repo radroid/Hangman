@@ -1,4 +1,4 @@
-from hangman_pack import HangmanGame
+from Hangman import HangmanGame
 
 
 print('\n\nH A N G M A N\n')
@@ -19,12 +19,13 @@ while not end_game:
     if game.get_status() == 'won':
         print('Congratulations! You guessed the word correctly.')
     else:
+        print(f'The word is: {game.get_word()}')
         print('Better luck next time. :(')
 
     print(f'\nPoints scored in this round: {game.update_points()}')
     print(f'Total points: {game.total_points}\n')
     end_game = input('Would you like to play again? (Y/N) ').lower() == 'n'
-    game.new_game()
+    game.reset_game()
 
 print('\n\nThanks for playing!')
 print('We\'ll see how well you did in the next stage\n')
