@@ -40,10 +40,16 @@ python3 -m venv Hangman_venv
 source Hangman_venv/bin/activate
 ```
 
-6. change directory, install dependencies and run program.
+6. change directory, install dependencies and run tests.
 ```bash
 cd Hangman
 pip install -r requirements.txt
+pytest # Runs tests to check if everything is in order.
+```
+*If any of the tests fail, please contact me or [create an issue](https://github.com/radroid/Hangman/issues).*
+
+7. Finally, run the program! :partying_face:
+```bash
 python PlayHangman.py
 ```
 
