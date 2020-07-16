@@ -22,11 +22,11 @@ class TestGamePlay(TestCase):
             HangmanGame(filename='word_banker.txt')
 
     def test_is_comment_true(self):
-        result = self.game_one.is_comment('# This is a comment')
+        result = HangmanGame.is_comment('# This is a comment')
         self.assertEqual(True, result)
 
     def test_is_comment_false(self):
-        result = self.game_one.is_comment('This is a not comment')
+        result = HangmanGame.is_comment('This is a not comment')
         self.assertEqual(False, result)
 
     def test_set_word_empty(self):

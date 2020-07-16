@@ -1,7 +1,7 @@
 import random as r
 from itertools import dropwhile
 from time import time
-from os import path
+from os import path,getcwd
 
 
 class HangmanGame:
@@ -36,7 +36,7 @@ class HangmanGame:
         """
 
         if filename is None:
-            filename = path.dirname(__file__)+'/../word_bank.txt'
+            filename = path.dirname(__file__) + '/src/word_bank.txt'
 
         self.is_valid_filename(filename)
         self.filename = filename
@@ -67,7 +67,7 @@ class HangmanGame:
         """ Checks if the filename entered is valid """
         if not filename.endswith('.txt'):
             raise NameError('Please enter the correct path to the .txt file.')
-        elif not path.exists(filename):
+        elif not path.isfile(filename):
             raise FileNotFoundError(f'No file found in: {filename}')
 
         HangmanGame.print_file_stats(filename)
