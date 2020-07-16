@@ -29,4 +29,4 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Calling Package Test Python file
       run: |
-        python tests/test_HangmanGame.py
+        pytest
