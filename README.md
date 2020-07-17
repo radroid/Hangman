@@ -4,8 +4,9 @@
 
 > One can create a simple version of hangman (using the package) with **less than 10 lines of code**
 
-> *Tags: hangman, simple hangman, hangman package, game, game package, play hangman.*
+*Tags: hangman, simple hangman, hangman package, game, game package, play hangman.*
 
+![Workflow build status](https://img.shields.io/github/workflow/status/radroid/Hangman/Python%20package?style=for-the-badge)
 ![Top Language](https://img.shields.io/github/languages/top/RajD007/Hangman?style=for-the-badge) 
 [![License](https://img.shields.io/github/license/RajD007/Hangman?style=for-the-badge)](https://github.com/RajD007/Hangman/blob/master/LICENSE) 
 ![Last Commit](https://img.shields.io/github/last-commit/RajD007/Hangman?style=for-the-badge) 
