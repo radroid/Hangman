@@ -2,7 +2,7 @@
 > My **first python** project.  :nerd_face:
 > Includes a package - '**hangman**' - with all methods required to build the game.
 
-> One can create a simple version of hangman (using the package) with **less than 10 lines of code**
+> One can create a simple version of hangman (using the package) with **less than 20 lines of code**
 
 *Tags: hangman, simple hangman, hangman package, game, game package, play hangman.*
 
