@@ -25,10 +25,14 @@
 
 2. Open terminal.
 
-3. Navigate to the directory of your choice or continue with the Home directory.
+3. Navigate to the directory of your choice **or** continue with the Home directory.
+```bash
+# Hint: use 'ls' and 'cd' commands
+ls # to list files and directories in the current directory.
+cd [dir_name] # to change directory to '[dir_name]'.
+````
 
 4. Clone this repository:
-
 ```bash
 git clone https://github.com/radroid/Hangman.git
 ```
