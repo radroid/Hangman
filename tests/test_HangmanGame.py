@@ -1,8 +1,17 @@
 import io
-from itertools import dropwhile
 from unittest import TestCase, main, mock
+
 from Hangman import HangmanGame
 import pytest
+
+
+def in_command():
+    commands = ['y', '/../word_bank.txt', '/../word_bank.txt']
+    yield commands.pop(0)
+
+
+def mock_input():
+    return next(in_command())
 
 
 class TestGamePlay(TestCase):
@@ -10,7 +19,6 @@ class TestGamePlay(TestCase):
     def setUp(self):
         """ Creates GamePlay class for all the unittests. """
         self.game_one = HangmanGame()
-        HangmanGame.game_object_number = 1
         self.game_two = HangmanGame()
 
     def test_is_valid_filename_NameError(self):
@@ -38,34 +46,33 @@ class TestGamePlay(TestCase):
                                                                                    '\'word\' do not match. ')
         self.assertIn('_', self.game_one.word_display, '\'word_display\' does not contain dashes: \'_\'')
 
-    def test_set_word_error(self):
+    @mock.patch('builtins.input', lambda *args: 'n')
+    def test_set_word_error_n(self):
         """ Checks if the correct error is raised. """
-        word_bank = []
-        with open(self.game_one.filename, 'r') as f:
-            for word in dropwhile(HangmanGame.is_comment, f):
-                word_bank.append(word[:-1])
-        self.game_one.words_played = word_bank
+        self.game_one.word_bank = set()
 
-        with mock.patch('sys.stdout', new=io.StringIO()) as stdout:
-            self.game_one.set_word()
-            self.assertEqual('Error: The word bank has been exhausted.\n', stdout.getvalue(),
-                             'UserWarning not raised')
+        with self.assertRaises(UserWarning, msg='The word bank has been exhausted and you did not update it.'):
+            with mock.patch('sys.stdout', new=io.StringIO()) as stdout:
+                self.game_one.set_word()
+                self.assertEqual('Error: The word bank has been exhausted.\n', stdout.getvalue(),
+                                 'UserWarning not raised')
 
-    def test_word_display(self):
-        pass
-
-    def test_guess_letter(self):
-        # TODO: write a tests to check if update guessed_letters, correct_guesses, incorrect_guesses, Hangman are
-        #  updated correctly. Use mock.
-        pass
-
-    def test_get_valid_guess(self):
-        # TODO: write a tests using mock to check for all different inputs.
-        # with mock.patch('builtins.input', return_value='hello'):
-        #     with mock.patch('sys.stdout', new=io.StringIO()) as output:
-        #         self.game_one.get_valid_guess()
-        #         self.assertEqual(output.get_value(), 'hello is not a valid input. Please enter a single alphabet.')
-        pass
+    # @mock.patch('builtins.input', side_effect=['y', '/../word_bank.txt'])
+    # def test_set_word_error_y(self, mock_inputs):
+    #     """
+    #     Checks if the correct error is raised.
+    #
+    #     Notes: The syntax for this test is based on Pytest and not unittest.
+    #     """
+    #     self.game_one.word_bank = set()
+    #
+    #     with mock.patch('sys.stdout', new=io.StringIO()) as stdout:
+    #         self.game_one.set_word()
+    #         self.assertEqual('Error: The word bank has been exhausted.\n', stdout.getvalue(),
+    #                          'UserWarning not raised')
+    #
+    #     self.assertIsNotNone(self.game_one.word_bank, 'word_bank is not updated.')
+    #     self.assertIsNotNone(self.game_one.word, 'Word is not updated after updating file.')
 
     def test_update_word_display(self):
         self.game_one.set_word()
@@ -100,14 +107,12 @@ class TestGamePlay(TestCase):
         self.assertEqual('guessing', self.game_one.get_status(), 'Initial state of the game is incorrect')
 
         self.game_one.word_display = ['o']
-        self.game_one.set_status()
         self.assertEqual('guessing', self.game_one.get_status(), 'State of the game after one move is incorrect')
 
     def test_get_status_won_hello(self):
         self.game_one.set_word()
         self.game_one.word = 'hello'
         self.game_one.word_display = ['h', 'e', 'l', 'l', 'o']
-        self.game_one.set_status()
         self.assertEqual('won', self.game_one.get_status(), 'State of a game won is incorrect')
 
     def test_get_status_guessing_world(self):
@@ -120,7 +125,6 @@ class TestGamePlay(TestCase):
         self.game_two.word = 'world'
         self.game_two.word_display = ['w', 'o', 'r', 'l', '_']
         self.game_two.incorrect_guesses = ['i', 'p', 't', 'q', 's', 'n']
-        self.game_two.set_status()
         self.assertEqual('lost', self.game_two.get_status(), 'State of a game lost is incorrect')
 
     def test_update_points_hello_right_3(self):
@@ -183,7 +187,6 @@ class TestGamePlay(TestCase):
         self.game_one.set_word()
         self.game_one.word = 'hello'
         self.game_one.word_display = list('hello')
-        self.game_one.set_status()
         self.game_one.reset_game()
         self.assertIn('hello', self.game_one.words_played, 'Word not present in words played set')
         self.assertIn('hello', self.game_one.words_guessed, 'Word not present in the correctly guessed set')
@@ -194,7 +197,6 @@ class TestGamePlay(TestCase):
         self.game_one.word_display = list('j_v_s_____')
         self.game_one.incorrect_guesses = ['n', 'o', 'l', 'q', 'b', 'y']
         self.game_one.correct_guesses = ['v', 'j', 's']
-        self.game_one.set_status()
         self.game_one.reset_game()
         self.assertIn('javascript', self.game_one.words_played, 'Word not present in words played set')
         self.assertNotIn('javascript', self.game_one.words_guessed, 'Word not present in the correctly guessed set')

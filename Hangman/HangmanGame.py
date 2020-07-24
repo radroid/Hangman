@@ -1,4 +1,3 @@
-import random as r
 from itertools import dropwhile
 from time import time
 from os import path
@@ -9,7 +8,7 @@ class HangmanGame:
     HangmanGame class manages variables and methods required to play Hangman.
 
     Attributes:
-        filename (str): Path to file containing the word bank.
+        word_bank (set of str): Set of words to be used to play hangman.
         words_played (list of str): A list of words player attempted to guess.
         words_guessed (list of str): A list of words guessed correctly by the player.
         total_points (int): Keeps a count of the number of points for the player.
@@ -25,26 +24,18 @@ class HangmanGame:
     """
 
     def __init__(self, filename=None, words_played=None, words_guessed=None):
-        """
-        Initialise GamePlay class.
-
-        Args:
-            filename (str): Path to file containing the word bank.
-             words_played (set of str): number of words already played.
-             words_guessed (set of str): number of words guessed correctly out of the words played.
-
-        """
+        """ Initialise GamePlay class. """
 
         if filename is None:
             filename = path.dirname(__file__) + '/../word_bank.txt'
 
-        self.is_valid_filename(filename)
-        self.filename = filename
+        self.file_exists(filename)
+        self.word_bank = self.save_file_data(filename)
 
         if words_guessed is None:
-            words_guessed = set({})
+            words_guessed = set()
         if words_played is None:
-            words_played = set({})
+            words_played = set()
 
         self.words_played = words_played
         self.words_guessed = words_guessed
@@ -62,40 +53,41 @@ class HangmanGame:
         self.status = ''
         self.game_number = len(self.words_played) + 1
 
-    @staticmethod
-    def is_valid_filename(filename):
+    @classmethod
+    def save_file_data(cls, filename):
+        """
+        Reads and returns a 'set of strings', containing all the words in the .txt file.
+
+        Args:
+            filename (str): contains the path to the .txt file that contains the words to be played
+
+        Returns:
+            word_bank (set of str): contains unique set of words contained in .txt file.
+        """
+        t0 = time()
+        words_bank = set()
+        with open(filename, 'r') as f:
+            for line in dropwhile(cls.is_comment, f):
+                words_bank.add(line.strip())
+
+        duration = round(time() - t0, 5)
+        avg_length = round(sum(map(len, words_bank)) / len(words_bank), 2)
+
+        print(f'Word bank is successfully updated.\n'
+              f'Filename: {filename}\n'
+              f'Time taken to calculate = {duration} s\n'
+              f'Total number of words = {len(words_bank)}\n'
+              f'Average length of words = {avg_length}\n')
+
+        return words_bank
+
+    @classmethod
+    def file_exists(cls, filename):
         """ Checks if the filename entered is valid """
         if not filename.endswith('.txt'):
             raise NameError('Please enter the correct path to the .txt file.')
         elif not path.isfile(filename):
             raise FileNotFoundError(f'No file found in: {filename}')
-
-        HangmanGame.print_file_stats(filename)
-
-    @staticmethod
-    def print_file_stats(filename):
-        # TODO: Themes and levels can be added.
-        """
-        Reads a .txt file containing all the words, and returns a list containing them.
-
-        Args:
-            filename (str): contains the path to the .txt file that contains the words to be played
-
-        Returns: none
-        """
-        t0 = time()
-        words_bank = []
-        with open(filename, 'r') as f:
-            for line in dropwhile(HangmanGame.is_comment, f):
-                words_bank.append(line)
-
-        duration = round(time() - t0, 5)
-        avg_length = round(sum(map(len, words_bank)) / len(words_bank), 2)
-
-        print(f'Filename: {filename}')
-        print(f'Time taken to calculate = {duration} s')
-        print(f'Total number of words = {len(words_bank)}')
-        print(f'Average length of words = {avg_length}\n')
 
     @staticmethod
     def is_comment(line):
@@ -111,40 +103,43 @@ class HangmanGame:
         """
         return line.startswith('#')
 
-    def set_new_filename(self):
-        """ Helps set up a new file for the word bank. """
-        while True:
+    def update_word_bank(self):
+        """ Updates word_bank from a new .txt. """
+        end = False
+        while not end:
             try:
-                new_filename = input('Enter path to/name of the new .txt file: ')
-                self.is_valid_filename(new_filename)
-                self.print_file_stats(new_filename)
-                self.filename = new_filename
-                break
+                print('\nEnter "end" if you you want to exit.\n')
+                new_filename = input('Enter path to the new .txt file: ')
+                if new_filename == 'end':
+                    end = True
+                else:
+                    self.file_exists(new_filename)
+                    self.word_bank = self.save_file_data(new_filename)
+                    end = True
             except NameError as e:
                 print(f'Error: {e}')
             except FileNotFoundError as e:
                 print(f'Error: {e}')
+        print('Loop ended')
 
     def set_word(self):
         """ Selects a word from a list of words. This word is to be guessed in the game. """
         try:
-            word_bank = []
-            with open(self.filename, 'r') as f:
-                for word in dropwhile(HangmanGame.is_comment, f):
-                    word_bank.append(word[:-1])
+            if len(self.word_bank) == 0:
+                raise UserWarning('The word bank has been exhausted. All the words have been used.')
 
-            # Remove words that have already been guessed.
-            word_bank = list(set(word_bank) - set(self.words_played))
-            if len(word_bank) == 0:
-                raise UserWarning('The word bank has been exhausted.')
-
-            # Set the word to be guessed in this round.
-            self.word = word_bank[r.randint(0, len(word_bank) - 1)]
+            self.word = self.word_bank.pop()
             self.word_display = ['_' for _ in self.word]
-            self.set_status()
+            self.__set_status()
 
         except UserWarning as error:
             print(f'Error: {error}')
+            command = input('Do you want to import words from a new .txt file?\n (y/n): ').lower()
+            if command == 'y':
+                self.update_word_bank()
+                self.set_word()
+            elif command == 'n':
+                raise UserWarning('The word bank has been exhausted and you did not update it.')
 
     def get_word(self):
         return self.word
@@ -162,7 +157,7 @@ class HangmanGame:
             self.incorrect_guesses.append(guess)
             self.update_hangman()
 
-        self.set_status()
+        self.__set_status()
 
     def get_valid_guess(self):
         """
@@ -211,9 +206,15 @@ class HangmanGame:
 
     def update_hangman(self):
         """ Updates the position of the hangman for every incorrect guess by the user """
-        hangman_parts = ['O', '|', '/', '\\', '/', '\\']  # Symbols to complete hangman's body
-        index = len(self.incorrect_guesses) - 1  # Index to update the last incorrect guess
-        update_statement = {list(self.hangman.keys())[index]: hangman_parts[index]}  # Preparing entry for update
+        # Symbols to complete hangman's body
+        hangman_parts = ['O', '|', '/', '\\', '/', '\\']
+
+        # Index to update the last incorrect guess
+        index = len(self.incorrect_guesses) - 1
+
+        # Preparing entry for update
+        update_statement = {list(self.hangman.keys())[index]: hangman_parts[index]}
+
         self.hangman.update(update_statement)
 
     def print_hangman(self):
@@ -278,7 +279,7 @@ class HangmanGame:
 
         list_of_common_char = 'e-t-a-o-i-n-s-h-r-d-l-u'.split('-')
         points = 0
-        self.set_status()
+        self.__set_status()
 
         if self.get_status() == 'won':
             for char in self.correct_guesses:
@@ -311,7 +312,7 @@ class HangmanGame:
         """
         return self.total_points
 
-    def set_status(self):
+    def __set_status(self):
         """ Updates the status of the game if ended. """
 
         if len(self.incorrect_guesses) >= len(self.hangman):
@@ -328,7 +329,7 @@ class HangmanGame:
         Args: None
         Returns: status (str) - 'won', 'lost' or 'guessing'
         """
-
+        self.__set_status()
         return self.status
 
     def __update_list_of_words(self):
@@ -357,10 +358,6 @@ class HangmanGame:
             self.status = ''
             self.game_number = len(self.words_played) + 1
 
-    @classmethod
-    def increment_game_object_number(cls):
-        cls.game_object_number += 1
-
-    @classmethod
-    def get_number_of_games_created(cls):
-        return cls.game_object_number
+    def __repr__(self):
+        print(f'\n\nTotal points: {self.get_total_points()}\n'
+              f'Words correctly guessed: {", ".join(self.words_guessed)}\n\n')
