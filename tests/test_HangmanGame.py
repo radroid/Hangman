@@ -1,8 +1,6 @@
 import io
 from unittest import TestCase, main, mock
-
 from Hangman import HangmanGame
-import pytest
 
 
 def in_command():
