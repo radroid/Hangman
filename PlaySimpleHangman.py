@@ -24,7 +24,7 @@ while not end_game:
 
     print(f'\nPoints scored in this round: {game.update_points()}')
     print(f'Total points: {game.total_points}\n')
-    end_game = input('Would you like to play again? (Y/N) ').lower() == 'n'
+    end_game = input('Would you like to play again? (y/n) ').lower() == 'n'
     game.reset_game()
 
 print('\n\nThanks for playing!')

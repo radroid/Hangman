@@ -54,25 +54,23 @@ class TestGamePlay(TestCase):
         with self.assertRaises(UserWarning, msg='The word bank has been exhausted and you did not update it.'):
             with mock.patch('sys.stdout', new=io.StringIO()) as stdout:
                 self.game_one.set_word()
-                self.assertEqual('Error: The word bank has been exhausted.\n', stdout.getvalue(),
+                self.assertEqual('Error: The word bank has been exhausted. All the words have been used.\n',
+                                 stdout.getvalue(),
                                  'UserWarning not raised')
 
-    # @mock.patch('builtins.input', side_effect=['y', '/../word_bank.txt'])
-    # def test_set_word_error_y(self, mock_inputs):
-    #     """
-    #     Checks if the correct error is raised.
-    #
-    #     Notes: The syntax for this test is based on Pytest and not unittest.
-    #     """
-    #     self.game_one.word_bank = set()
-    #
-    #     with mock.patch('sys.stdout', new=io.StringIO()) as stdout:
-    #         self.game_one.set_word()
-    #         self.assertEqual('Error: The word bank has been exhausted.\n', stdout.getvalue(),
-    #                          'UserWarning not raised')
-    #
-    #     self.assertIsNotNone(self.game_one.word_bank, 'word_bank is not updated.')
-    #     self.assertIsNotNone(self.game_one.word, 'Word is not updated after updating file.')
+    def test_set_word_error_y(self):
+        """
+        Checks if the correct error is raised.
+
+        Notes: The syntax for this test is based on Pytest and not unittest.
+        """
+        self.game_one.word_bank = set()
+
+        with mock.patch('builtins.input', side_effect=['y', 'word_bank.txt']):
+            self.game_one.set_word()
+
+        self.assertIsNotNone(self.game_one.word_bank, 'word_bank is not updated.')
+        self.assertIsNotNone(self.game_one.word, 'Word is not updated after updating file.')
 
     def test_update_word_display(self):
         self.game_one.set_word()

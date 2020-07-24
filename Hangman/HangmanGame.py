@@ -134,7 +134,7 @@ class HangmanGame:
 
         except UserWarning as error:
             print(f'Error: {error}')
-            command = input('Do you want to import words from a new .txt file?\n (y/n): ').lower()
+            command = input('Do you want to import words from a new .txt file?\n(y/n): ').lower()
             if command == 'y':
                 self.update_word_bank()
                 self.set_word()
