@@ -7,15 +7,15 @@
 *Tags: hangman, simple hangman, hangman package, game, game package, play hangman.*
 
 ![Workflow build status](https://img.shields.io/github/workflow/status/radroid/Hangman/Python%20package?style=for-the-badge)
-![Top Language](https://img.shields.io/github/languages/top/RajD007/Hangman?style=for-the-badge) 
-[![License](https://img.shields.io/github/license/RajD007/Hangman?style=for-the-badge)](https://github.com/RajD007/Hangman/blob/master/LICENSE) 
-![Last Commit](https://img.shields.io/github/last-commit/RajD007/Hangman?style=for-the-badge) 
-[![Open Pull Requests](https://img.shields.io/github/issues-pr/RajD007/Hangman?style=for-the-badge)](https://github.com/RajD007/Hangman/pulls) 
-[![Closed Pull Requests](https://img.shields.io/github/issues-pr-closed/RajD007/Hangman?style=for-the-badge)](https://github.com/RajD007/Hangman/pulls?q=is%3Apr+is%3Aclosed)
+![Top Language](https://img.shields.io/github/languages/top/radroid/Hangman?style=for-the-badge) 
+[![License](https://img.shields.io/github/license/radroid/Hangman?style=for-the-badge)](https://github.com/radroid/Hangman/blob/master/LICENSE) 
+![Last Commit](https://img.shields.io/github/last-commit/radroid/Hangman?style=for-the-badge) 
+[![Open Pull Requests](https://img.shields.io/github/issues-pr/radroid/Hangman?style=for-the-badge)](https://github.com/radroid/Hangman/pulls) 
+[![Closed Pull Requests](https://img.shields.io/github/issues-pr-closed/radroid/Hangman?style=for-the-badge)](https://github.com/radroid/Hangman/pulls?q=is%3Apr+is%3Aclosed)
 
 ![hangman-terminal-run](images/hangman-terminal.gif)
 
-**Watch** :eye: repository to get notified on updates. (Maybe :star: and visit back)
+**Watch** :eye: repository to get notified on updates (or :star2: and visit back).
 
 ## SETUP
 ### For a Mac/Linux User:
@@ -66,9 +66,9 @@ python PlayHangman.py
 ## SUPPORT
 Follow and Reach out to me one of the following places!
 
-![Github Follow](https://img.shields.io/github/followers/RajD007?label=Follow&style=social) ![Twitter Follow](https://img.shields.io/twitter/follow/Raj_Dholakia001?label=Follow&style=social)
+![Github Follow](https://img.shields.io/github/followers/radroid?label=Follow&style=social) ![Twitter Follow](https://img.shields.io/twitter/follow/Raj_Dholakia001?label=Follow&style=social)
 
 ## LICENSE
-[![License](https://img.shields.io/github/license/RajD007/Hangman?style=for-the-badge)](https://github.com/RajD007/Hangman/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/radroid/Hangman?style=for-the-badge)](https://github.com/radroid/Hangman/blob/master/LICENSE)
 
 **[MIT license](https://opensource.org/licenses/MIT)**
