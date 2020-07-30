@@ -33,9 +33,10 @@ ls # to list files and directories in the current directory.
 cd [dir_name] # to change directory to '[dir_name]'.
 ````
 
-4. Clone this repository:
+4. Clone this repository and change directory:
 ```bash
 git clone https://github.com/radroid/Hangman.git
+cd Hangman
 ```
 *Wait for the cloning to be complete.*
 
@@ -45,9 +46,8 @@ python3 -m venv Hangman_venv
 source Hangman_venv/bin/activate
 ```
 
-6. change directory, install dependencies and run tests.
+6. Install dependencies and run tests.
 ```bash
-cd Hangman
 pip install -r requirements.txt
 pytest # Runs tests to check if everything is in order.
 ```
@@ -55,7 +55,7 @@ pytest # Runs tests to check if everything is in order.
 
 7. Finally, run the program! :partying_face:
 ```bash
-python PlayHangman.py
+python hangman/examples/PlaySimpleHangman.py
 ```
 
 **Setup example**
