@@ -1,15 +1,6 @@
 import io
 from unittest import TestCase, main, mock
-from Hangman import HangmanGame
-
-
-def in_command():
-    commands = ['y', '/../word_bank.txt', '/../word_bank.txt']
-    yield commands.pop(0)
-
-
-def mock_input():
-    return next(in_command())
+from hangman import HangmanGame
 
 
 class TestGamePlay(TestCase):
@@ -80,22 +71,22 @@ class TestGamePlay(TestCase):
     def test_update_hangman_head(self):
         self.game_one.incorrect_guesses = ['a']
         self.game_one.update_hangman()
-        self.assertEqual('O', self.game_one.hangman.get('head'), 'Hangman\'s head was not updated.')
+        self.assertEqual('O', self.game_one.hangman.get('head'), 'hangman\'s head was not updated.')
 
     def test_update_hangman_body(self):
         self.game_one.incorrect_guesses = ['a', 'b']
         self.game_one.update_hangman()
-        self.assertEqual('|', self.game_one.hangman.get('body'), 'Hangman\'s body was not updated.')
+        self.assertEqual('|', self.game_one.hangman.get('body'), 'hangman\'s body was not updated.')
 
     def test_update_hangman_right_hand(self):
         self.game_one.incorrect_guesses = ['a', 'b', 'c']
         self.game_one.update_hangman()
-        self.assertEqual('/', self.game_one.hangman.get('right_hand'), 'Hangman\'s right_hand was not updated.')
+        self.assertEqual('/', self.game_one.hangman.get('right_hand'), 'hangman\'s right_hand was not updated.')
 
     def test_update_hangman_left_hand(self):
         self.game_one.incorrect_guesses = ['a', 'b', 'c', 'd']
         self.game_one.update_hangman()
-        self.assertEqual('\\', self.game_one.hangman.get('left_hand'), 'Hangman\'s left_hand was not updated.')
+        self.assertEqual('\\', self.game_one.hangman.get('left_hand'), 'hangman\'s left_hand was not updated.')
 
     def test_get_status_guessing_hello(self):
         self.game_one.set_word()

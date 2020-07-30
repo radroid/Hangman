@@ -1,4 +1,4 @@
-from Hangman import HangmanGame
+from hangman import HangmanGame
 from PyDictionary import PyDictionary
 from goslate import Goslate as gs
 import random as r

@@ -1,4 +1,4 @@
-from Hangman import HangmanGame
+from hangman import HangmanGame
 
 
 print('\n\nH A N G M A N\n')
