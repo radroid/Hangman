@@ -33,15 +33,15 @@ ls # to list files and directories in the current directory.
 cd [dir_name] # to change directory to '[dir_name]'.
 ````
 
-4. Clone this repository and change directory:
+4. Clone this repository:
 ```bash
 git clone https://github.com/radroid/Hangman.git
-cd Hangman
 ```
-*Wait for the cloning to be complete.*
+*Wait for installation of necessary tools to be completed.*
 
-5. Create a virtual environment to run the program.
+5. Change directory and create a virtual environment to run the program.
 ```bash
+cd Hangman
 python3 -m venv Hangman_venv
 source Hangman_venv/bin/activate
 ```
