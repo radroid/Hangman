@@ -1,3 +1,5 @@
+"""Settings to assist package installation"""
+
 import setuptools
 
 with open('README.md', 'r') as f:
@@ -10,7 +12,8 @@ setuptools.setup(name='hangman',
                  url='https://gtihub.com/radroid/Hangman',
                  license='MIT open-source licence',
                  description='hangman game package',
-                 keywords=['hangman', 'simple hangman', 'hangman package', 'game', 'game package', 'play hangman'],
+                 keywords=['hangman', 'simple hangman', 'hangman package',
+                           'game', 'game package', 'play hangman'],
                  long_description=long_description,
                  packages=setuptools.find_packages(),
                  zip_safe=False,
@@ -22,5 +25,7 @@ setuptools.setup(name='hangman',
                      'Operating System :: Linux/MacOs',
                      'Programming Language :: Python',
                      'Topic :: Desktop Environment'
-                 ]
+                 ],
+                 include_package_data=True,
+                 package_data={'': ['data/*.txt', 'examples/*.py']},
                  )

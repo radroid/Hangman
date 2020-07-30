@@ -41,7 +41,7 @@ class HangmanGame:
 
         """
         if filename is None:
-            filename = path.dirname(__file__) + '/../word_bank.txt'
+            filename = path.dirname(__file__) + '/data/word_bank.txt'
 
         self.file_exists(filename)
         self.word_bank = self.save_file_data(filename)

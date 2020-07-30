@@ -67,7 +67,8 @@ class TestGamePlay(TestCase):
         """
         self.game_one.word_bank = set()
 
-        with mock.patch('builtins.input', side_effect=['y', 'word_bank.txt']):
+        with mock.patch('builtins.input',
+                        side_effect=['y', 'hangman/data/word_bank.txt']):
             self.game_one.set_word()
 
         self.assertIsNotNone(self.game_one.word_bank, 'word_bank is not '
