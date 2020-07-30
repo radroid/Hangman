@@ -1,3 +1,6 @@
+"""Module contains class HangmanGame."""
+
+
 from itertools import dropwhile
 from time import time
 from os import path

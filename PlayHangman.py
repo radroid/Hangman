@@ -1,6 +1,6 @@
 from hangman import HangmanGame
 from PyDictionary import PyDictionary
-from goslate import Goslate as gs
+from goslate import Goslate
 import random as r
 
 print('\n\nH A N G M A N\n')
@@ -26,23 +26,26 @@ while not end_game:
         print(f'The word to be guessed is: {game.get_word()}')
         print('I am sure you will do better next time. :)\n')
 
+    gs = Goslate()
     avail_lang = gs.get_languages()
-    fact_name = ['Synonyms', 'Antonyms', 'Translation']
-
-    function_num = 2  # r.randint(0, 3)
-    lang_num = r.randint(0, len(avail_lang) - 1)
 
     dictionary = PyDictionary(game.get_word())
-    post_game_word_info = [dictionary.getSynonyms,
-                           dictionary.getAntonyms,
-                           dictionary.translateTo]
+    func_dict = {'Synonyms': dictionary.getSynonyms,
+                 'Antonyms': dictionary.getAntonyms,
+                 'Translation': dictionary.translateTo}
 
-    if function_num == 2:
-        fun_fact = post_game_word_info[function_num](avail_lang[lang_num])
+    lang = r.choice(avail_lang)
+    func_name = r.choice(list(func_dict.keys()))
+    function = func_dict[func_name]
+
+    if func_name == 'Translation':
+        fun_fact = function(language=lang)
     else:
-        fun_fact = post_game_word_info[function_num]()[0]
+        fun_fact = function()
         fun_fact = ', '.join(fun_fact.get(game.get_word()))
-    print(f'\nFun fact about the word:\n{fact_name[function_num].capitalize()} - {fun_fact}')
+
+    print(f'\nFun fact about the word:\n{func_name.capitalize()}'
+          f' - {fun_fact}')
 
     print(f'\nPoints scored in this round: {game.update_points()}')
     print(f'Total points: {game.total_points}\n')
