@@ -51,7 +51,8 @@ while not end_game:
         fun_fact = function(language=lang)[0]
         func_name = f'{func_name.capitalize()} to {lang}'
     else:
-        fun_fact = ', '.join(function())
+        fun_fact = function()[0]
+        fun_fact = ', '.join(fun_fact.get(game.get_word()))
         func_name = func_name.capitalize()
 
     print(f'\nFun fact about the word:\n{func_name}'
