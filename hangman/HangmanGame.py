@@ -240,36 +240,48 @@ class HangmanGame:
         # Index to update the last incorrect guess
         index = len(self.incorrect_guesses) - 1
 
-        # Preparing entry for update
+        # Preparing entry for hangman dictionary update
         update_statement = {
             list(self.hangman.keys())[index]: hangman_parts[index]}
 
         self.hangman.update(update_statement)
 
-    def print_hangman(self):
-        # TODO: improve method to make printing to console more modular
-        #  and flexible
-        # TODO: separate hangman art from word.
-        """Prints the current position of the hangman."""
-        h = self.hangman
+    def get_hangman(self):
+        """Returns a string with the current position of the hangman.
 
+        Args: None
+
+        Returns
+            hangman (str): Diagram/position of the hangman at
+            this point in the game.
+        """
         hangman_pole = """
           +---+
           |   |
-          |   {}
-          |  {}{}{}
-          |  {} {}
+          |   {head}
+          |  {right_hand}{body}{left_hand}
+          |  {right_leg} {left_leg}
           |
         =========
         """
 
-        print(hangman_pole.format(h.get('head'), h.get('right_hand'),
-                                  h.get('body'),
-                                  h.get('left_hand'), h.get('right_leg'),
-                                  h.get('left_leg')))
+        return hangman_pole.format(**self.hangman)
 
-        print('\t' + ' '.join(self.word_display) + '\n')
-        print(f'Letters guessed: {", ".join(self.guessed_letters)}')
+    def get_position(self):
+        """Returns a string with the other data needed to play.
+
+        Notes:
+            Data includes, word being guessed with missing letter
+            replaced with '_' and the letters incorrectly guessed.
+
+            Args: None
+
+            Returns
+                string: word with correctly guessed letters and missing letters
+                        and incorrectly guessed letters.
+        """
+        return f'\t {" ".join(self.word_display)}\n' \
+               f'Letters guessed: {", ".join(self.guessed_letters)}'
 
     def update_points(self):
         """Updates the total_points. The points system is slightly complex.
@@ -312,6 +324,8 @@ class HangmanGame:
 
             Points for individual games are added to total_points.
 
+        Returns:
+            points (int): The points scored in this particular round/game.
         """
         list_of_common_char = 'e-t-a-o-i-n-s-h-r-d-l-u'.split('-')
         points = 0

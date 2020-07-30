@@ -1,31 +1,32 @@
+"""Simple example of using HangmanGame."""
+
 from hangman import HangmanGame
 
 
 print('\n\nH A N G M A N\n')
 
+# Create the game.
 game = HangmanGame()
-end_game = False
 
-while not end_game:
-    game.set_word()
-    status = game.get_status() == 'guessing'
-    while status:
-        game.print_hangman()
-        game.guess_letter()
-        status = game.get_status() == 'guessing'
+game.set_word()
+game_over = not game.get_status() == 'guessing'
 
-    game.print_hangman()
+# Loop while the player is guessing.
+while not game_over:
+    print(game.get_hangman())
+    print(game.get_position())
+    game.guess_letter()
+    game_over = not game.get_status() == 'guessing'
 
-    if game.get_status() == 'won':
-        print('Congratulations! You guessed the word correctly.')
-    else:
-        print(f'The word is: {game.get_word()}')
-        print('I am sure you will do better next time. :)')
+print(game.get_hangman())
+print(game.get_position())
 
-    print(f'\nPoints scored in this round: {game.update_points()}')
-    print(f'Total points: {game.total_points}\n')
-    end_game = input('Would you like to play again? (y/n) ').lower() == 'n'
-    game.reset_game()
+# Messages for the player post-game.
+if game.get_status() == 'won':
+    print('Congratulations! You guessed the word correctly.')
+else:
+    print(f'The word is: {game.get_word()}')
+    print('I am sure you will do better next time. :)')
 
-print('\n\nThanks for playing!')
+print('\nThanks for playing!')
 print('We\'ll see how well you did in the next stage\n')
