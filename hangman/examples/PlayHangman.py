@@ -72,8 +72,8 @@ while not end_game:
             game.reset_game()
             break
         else:
-            print("Please enter a valid response. Attempts left: "
-                  "{3 - attempts - 1}\n")
+            print('Please enter a valid response. Attempts left: '
+                  f'{3 - attempts - 1}\n')
 
 print('\n\nThanks for playing!')
 print('We\'ll see how well you did in the next stage\n')
