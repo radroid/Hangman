@@ -3,13 +3,17 @@
 
 from itertools import dropwhile
 from time import time
-from os import path
+from pathlib import Path
 
 
 class HangmanGame:
     """Class manages variables and methods required to play hangman.
 
-    Attributes
+    Class Attributes:
+        file_path (object): PosixPath object defining the location of
+                           word_bank.txt.
+
+    Attributes:
         word_bank (set of str): Set of words to be used to play hangman.
         words_played (set of str): A list of words player attempted to guess.
         words_guessed (set of str): A list of words guessed correctly by the
@@ -30,21 +34,24 @@ class HangmanGame:
         game_number (int): Counts the number of games played.
 
     """
+    file_path = Path.cwd() / 'data' / 'word_bank.txt'
 
-    def __init__(self, filename=None, ignore_words=None):
+    def __init__(self, path_to_file=None, ignore_words=None):
         """Initialise GamePlay class.
 
         Args:
-            filename (str): absolute path to .txt file containing the words.
+            path_to_file (PosixPath object): PosixPath object containing the
+                                             absolute path to .txt file with
+                                             words.
             ignore_words (list of words): list of words that are not be ignored
                                           while selecting a word to play.
 
         """
-        if filename is None:
-            filename = path.dirname(__file__) + '/data/word_bank.txt'
+        if path_to_file is None:
+            path_to_file = self.file_path
 
-        self.file_exists(filename)
-        self.word_bank = self.save_file_data(filename)
+        self.file_exists(path_to_file)
+        self.word_bank = self.save_file_data(path_to_file)
 
         if ignore_words is None:
             ignore_words = set()
@@ -66,19 +73,22 @@ class HangmanGame:
         self.game_number = len(self.words_played) + 1
 
     @classmethod
-    def save_file_data(cls, filename):
+    def save_file_data(cls, path_to_file):
         """Reads and returns a 'set of strings', containing all the words in
         the .txt file.
 
-        Args: filename (str): the path to the .txt file that contains the
-                              words to be played
+        Args:
+             path_to_file (PosixPath object): PosixPath object containing the
+                                              absolute path to .txt file with
+                                              words.
 
-        Returns: word_bank (set of str): contains unique set of words
+        Returns:
+            word_bank (set of str): contains unique set of words
                                          from the .txt file.
         """
         t0 = time()
         words_bank = set()
-        with open(filename, 'r') as f:
+        with open(path_to_file, 'r') as f:
             for line in dropwhile(cls.is_comment, f):
                 words_bank.add(line.strip())
 
@@ -86,7 +96,7 @@ class HangmanGame:
         avg_length = round(sum(map(len, words_bank)) / len(words_bank), 2)
 
         print(f'Word bank is successfully updated.\n'
-              f'Filename: {filename}\n'
+              f'Filename: {path_to_file}\n'
               f'Time taken to calculate = {duration} s\n'
               f'Total number of words = {len(words_bank)}\n'
               f'Average length of words = {avg_length}\n')
@@ -94,21 +104,24 @@ class HangmanGame:
         return words_bank
 
     @classmethod
-    def file_exists(cls, filename):
+    def file_exists(cls, path_to_file):
         """Checks if the filename entered is valid.
 
         Args:
-             filename (str): Absolute path to the .txt file.
+             path_to_file (PosixPath object): Absolute path to the .txt file.
 
         Raises:
+            TypeError:         If the path is not absolute.
             NameError:         If the path entered doesn't end with the '.txt'.
             FileNotFoundError: If the file is not found in the specified file
                                 path.
         """
-        if not filename.endswith('.txt'):
+        if not path_to_file.isabsolute():
+            raise TypeError('Please enter the absolute path to the file.')
+        elif not path_to_file.suffix('.txt'):
             raise NameError('Please enter the correct path to the .txt file.')
-        elif not path.isfile(filename):
-            raise FileNotFoundError(f'No file found in: {filename}')
+        elif not path_to_file.is_file() or not path_to_file.exists():
+            raise FileNotFoundError(f'No file found in: {path_to_file}')
 
     @staticmethod
     def is_comment(line):
@@ -126,6 +139,7 @@ class HangmanGame:
     def update_word_bank(self):
         """Updates word_bank from a new .txt."""
         end = False
+        new_filename = ''
         while not end:
             try:
                 print('\nEnter "end" if you you want to exit.\n')
@@ -133,14 +147,19 @@ class HangmanGame:
                 if new_filename == 'end':
                     end = True
                 else:
-                    self.file_exists(new_filename)
-                    self.word_bank = self.save_file_data(new_filename)
+                    new_file_path = Path(new_filename)
+                    self.file_exists(new_file_path)
+                    self.word_bank = self.save_file_data(new_file_path)
                     end = True
-            except NameError as e:
-                print(f'Error: {e}')
+            except TypeError as te:
+                print(f'Error: {te}')
+            except NameError as ne:
+                print(f'Error: {ne}')
             except FileNotFoundError as e:
                 print(f'Error: {e}')
-        print('Loop ended')
+        print('Loop ended.', end='')
+        print('Word bank successfully updated.' if new_filename == 'end'
+              else 'Word bank not updated.')
 
     def set_word(self):
         """Selects a word from a list of words. This word is to be guessed

@@ -17,14 +17,14 @@ class TestGamePlay(TestCase):
         with self.assertRaises(NameError, msg='NameError was not thrown when '
                                               'an incorrect filename was '
                                               'input'): 
-            HangmanGame(filename='word_bank')
+            HangmanGame(path_to_file='word_bank')
 
     def test_read_file_stats_FileFoundError(self):
         with self.assertRaises(FileNotFoundError, msg='FileNotFoundError was '
                                                       'not thrown when an '
                                                       'incorrect '
                                                       'filename was input'):
-            HangmanGame(filename='word_banker.txt')
+            HangmanGame(path_to_file='word_banker.txt')
 
     def test_is_comment_true(self):
         result = HangmanGame.is_comment('# This is a comment')
