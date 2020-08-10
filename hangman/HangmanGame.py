@@ -147,7 +147,7 @@ class HangmanGame:
                 if new_filename == 'end':
                     end = True
                 else:
-                    new_file_path = Path(new_filename)
+                    new_file_path = Path.cwd() / new_filename
                     self.file_exists(new_file_path)
                     self.word_bank = self.save_file_data(new_file_path)
                     end = True
@@ -157,7 +157,7 @@ class HangmanGame:
                 print(f'Error: {ne}')
             except FileNotFoundError as e:
                 print(f'Error: {e}')
-        print('Loop ended.', end='')
+        print('Loop ended. ', end='')
         print('Word bank successfully updated.' if new_filename == 'end'
               else 'Word bank not updated.')
 

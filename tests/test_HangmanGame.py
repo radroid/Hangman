@@ -2,6 +2,7 @@
 
 
 import io
+from pathlib import Path
 from unittest import TestCase, main, mock
 from hangman import HangmanGame
 
@@ -13,18 +14,29 @@ class TestGamePlay(TestCase):
         self.game_one = HangmanGame()
         self.game_two = HangmanGame()
 
+    def test_is_valid_filename_TypeError(self):
+        with self.assertRaises(TypeError, msg='TypeError was not thrown when '
+                                              'an absolute Path was '
+                                              'input'):
+            path_to_file = Path('word_bank')
+            HangmanGame(path_to_file=path_to_file)
+
     def test_is_valid_filename_NameError(self):
         with self.assertRaises(NameError, msg='NameError was not thrown when '
                                               'an incorrect filename was '
-                                              'input'): 
-            HangmanGame(path_to_file='word_bank')
+                                              'input'):
+            path_to_file = Path.cwd()
+            path_to_file = path_to_file / 'word_bank'
+            HangmanGame(path_to_file=path_to_file)
 
     def test_read_file_stats_FileFoundError(self):
         with self.assertRaises(FileNotFoundError, msg='FileNotFoundError was '
                                                       'not thrown when an '
                                                       'incorrect '
                                                       'filename was input'):
-            HangmanGame(path_to_file='word_banker.txt')
+            path_to_file = Path.cwd()
+            path_to_file = path_to_file / 'word_banker.txt'
+            HangmanGame(path_to_file=path_to_file)
 
     def test_is_comment_true(self):
         result = HangmanGame.is_comment('# This is a comment')
@@ -38,9 +50,9 @@ class TestGamePlay(TestCase):
         """Checks if the word is set correctly."""
         self.game_one.set_word()
         self.assertIsNotNone(self.game_one.word, 'Variable \'word\' is empty')
-        self.assertEqual(len(self.game_one.word_display), 
+        self.assertEqual(len(self.game_one.word_display),
                          len(self.game_one.word), 'Length of \'word_display\' '
-                                                  'and \'word\' do not match.') 
+                                                  'and \'word\' do not match.')
         self.assertIn('_', self.game_one.word_display, '\'word_display\' does '
                                                        'not contain dashes: '
                                                        '\'_\'')
@@ -52,7 +64,7 @@ class TestGamePlay(TestCase):
 
         with self.assertRaises(UserWarning, msg='The word bank has been '
                                                 'exhausted and you did not '
-                                                'update it.'): 
+                                                'update it.'):
             with mock.patch('sys.stdout', new=io.StringIO()) as stdout:
                 self.game_one.set_word()
                 self.assertEqual('Error: The word bank has been exhausted. '
@@ -87,48 +99,48 @@ class TestGamePlay(TestCase):
     def test_update_hangman_head(self):
         self.game_one.incorrect_guesses = ['a']
         self.game_one.update_hangman()
-        self.assertEqual('O', self.game_one.hangman.get('head'), 
+        self.assertEqual('O', self.game_one.hangman.get('head'),
                          'hangman\'s head was not updated.')
 
     def test_update_hangman_body(self):
         self.game_one.incorrect_guesses = ['a', 'b']
         self.game_one.update_hangman()
-        self.assertEqual('|', self.game_one.hangman.get('body'), 
+        self.assertEqual('|', self.game_one.hangman.get('body'),
                          'hangman\'s body was not updated.')
 
     def test_update_hangman_right_hand(self):
         self.game_one.incorrect_guesses = ['a', 'b', 'c']
         self.game_one.update_hangman()
-        self.assertEqual('/', self.game_one.hangman.get('right_hand'), 
+        self.assertEqual('/', self.game_one.hangman.get('right_hand'),
                          'hangman\'s right_hand was not updated.')
 
     def test_update_hangman_left_hand(self):
         self.game_one.incorrect_guesses = ['a', 'b', 'c', 'd']
         self.game_one.update_hangman()
-        self.assertEqual('\\', self.game_one.hangman.get('left_hand'), 
+        self.assertEqual('\\', self.game_one.hangman.get('left_hand'),
                          'hangman\'s left_hand was not updated.')
 
     def test_get_status_guessing_hello(self):
         self.game_one.set_word()
         self.game_one.word = 'hello'
-        self.assertEqual('guessing', self.game_one.get_status(), 
+        self.assertEqual('guessing', self.game_one.get_status(),
                          'Initial state of the game is incorrect')
 
         self.game_one.word_display = ['o']
-        self.assertEqual('guessing', self.game_one.get_status(), 
+        self.assertEqual('guessing', self.game_one.get_status(),
                          'State of the game after one move is incorrect')
 
     def test_get_status_won_hello(self):
         self.game_one.set_word()
         self.game_one.word = 'hello'
         self.game_one.word_display = ['h', 'e', 'l', 'l', 'o']
-        self.assertEqual('won', self.game_one.get_status(), 
+        self.assertEqual('won', self.game_one.get_status(),
                          'State of a game won is incorrect')
 
     def test_get_status_guessing_world(self):
         self.game_two.set_word()
         self.game_two.word = 'world'
-        self.assertEqual('guessing', self.game_two.get_status(), 
+        self.assertEqual('guessing', self.game_two.get_status(),
                          'Initial state of the game is incorrect')
 
     def test_get_status_lost_world(self):
@@ -136,7 +148,7 @@ class TestGamePlay(TestCase):
         self.game_two.word = 'world'
         self.game_two.word_display = ['w', 'o', 'r', 'l', '_']
         self.game_two.incorrect_guesses = ['i', 'p', 't', 'q', 's', 'n']
-        self.assertEqual('lost', self.game_two.get_status(), 
+        self.assertEqual('lost', self.game_two.get_status(),
                          'State of a game lost is incorrect')
 
     def test_update_points_hello_right_3(self):
@@ -188,7 +200,7 @@ class TestGamePlay(TestCase):
         self.game_two.word = 'javascript'
         self.game_two.word_display = list('javascrip_')
         self.game_two.incorrect_guesses = ['n', 'o', 'l', 'q', 'b', 'y']
-        self.game_two.correct_guesses = ['i', 'a', 'v', 'j', 's', 'c', 
+        self.game_two.correct_guesses = ['i', 'a', 'v', 'j', 's', 'c',
                                          'r', 'p']
         points = self.game_two.update_points()
         self.assertEqual(0, points, f'Points for \'javascrip_\' should be 0 '
@@ -208,11 +220,11 @@ class TestGamePlay(TestCase):
         self.game_one.word = 'hello'
         self.game_one.word_display = list('hello')
         self.game_one.reset_game()
-        self.assertIn('hello', self.game_one.words_played, 
+        self.assertIn('hello', self.game_one.words_played,
                       'Word not present in words played set')
-        self.assertIn('hello', self.game_one.words_guessed, 
+        self.assertIn('hello', self.game_one.words_guessed,
                       'Word not present in the correctly guessed set')
-        self.assertEqual(2, self.game_one.game_number, 
+        self.assertEqual(2, self.game_one.game_number,
                          'The game class number is incorrect')
 
         self.game_one.set_word()
@@ -221,16 +233,16 @@ class TestGamePlay(TestCase):
         self.game_one.incorrect_guesses = ['n', 'o', 'l', 'q', 'b', 'y']
         self.game_one.correct_guesses = ['v', 'j', 's']
         self.game_one.reset_game()
-        self.assertIn('javascript', self.game_one.words_played, 
-                      'Word not present in words played set') 
-        self.assertNotIn('javascript', self.game_one.words_guessed, 
-                         'Word not present in the correctly guessed set') 
-        self.assertIn('hello', self.game_one.words_played, 
-                      'Word not present in words played set') 
-        self.assertIn('hello', self.game_one.words_guessed, 
-                      'Word not present in the correctly guessed set') 
-        self.assertEqual(3, self.game_one.game_number, 
-                         'The game class number is incorrect') 
+        self.assertIn('javascript', self.game_one.words_played,
+                      'Word not present in words played set')
+        self.assertNotIn('javascript', self.game_one.words_guessed,
+                         'Word not present in the correctly guessed set')
+        self.assertIn('hello', self.game_one.words_played,
+                      'Word not present in words played set')
+        self.assertIn('hello', self.game_one.words_guessed,
+                      'Word not present in the correctly guessed set')
+        self.assertEqual(3, self.game_one.game_number,
+                         'The game class number is incorrect')
 
 
 if __name__ == '__main__':
