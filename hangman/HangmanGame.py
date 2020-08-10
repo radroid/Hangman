@@ -34,7 +34,7 @@ class HangmanGame:
         game_number (int): Counts the number of games played.
 
     """
-    file_path = Path.cwd() / 'data' / 'word_bank.txt'
+    file_path = Path.cwd() / 'hangman' / 'data' / 'word_bank.txt'
 
     def __init__(self, path_to_file=None, ignore_words=None):
         """Initialise GamePlay class.
@@ -84,11 +84,11 @@ class HangmanGame:
 
         Returns:
             word_bank (set of str): contains unique set of words
-                                         from the .txt file.
+                                    from the .txt file.
         """
         t0 = time()
         words_bank = set()
-        with open(path_to_file, 'r') as f:
+        with path_to_file.open('r') as f:
             for line in dropwhile(cls.is_comment, f):
                 words_bank.add(line.strip())
 
@@ -116,11 +116,11 @@ class HangmanGame:
             FileNotFoundError: If the file is not found in the specified file
                                 path.
         """
-        if not path_to_file.isabsolute():
+        if not path_to_file.is_absolute():
             raise TypeError('Please enter the absolute path to the file.')
-        elif not path_to_file.suffix('.txt'):
+        elif not path_to_file.suffix == '.txt':
             raise NameError('Please enter the correct path to the .txt file.')
-        elif not path_to_file.is_file() or not path_to_file.exists():
+        elif not path_to_file.is_file() and not path_to_file.exists():
             raise FileNotFoundError(f'No file found in: {path_to_file}')
 
     @staticmethod
