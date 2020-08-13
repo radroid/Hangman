@@ -17,6 +17,16 @@
 
 **Watch** :eye: repository to get notified on updates (or :star2: and visit back).
 
+## Table of Contents
+* [Introduction](#hangman)
+* [Setup](#setup)
+    * [For a Mac/Linux User](#for-a-maclinux-user)
+    * [For a Developer](#for-a-developer)
+      * [Installing Hangman Package](#installing-hangman-package)
+      * [Code Review](#code-review)
+* [Support](#support)
+* [License](#license)
+
 ## SETUP
 ### For a Mac/Linux User
 
@@ -70,7 +80,7 @@ python hangman/examples/PlayHangman.py
 ### For a Developer
 The main python code is `hangman/HangmanGame.py`. The python module consists of a single class: `HangmanGame`. This class contains all the methods needed to play the game. A '.txt' file contains the word bank used in the game (see `hangman/data/word_bank.txt`).
 
-#### Installing package
+#### Installing Hangman Package
 1. Clone the repository on your device.
 ```bash
 git clone https://github.com/radroid/Hangman.git
