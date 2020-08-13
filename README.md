@@ -18,7 +18,7 @@
 **Watch** :eye: repository to get notified on updates (or :star2: and visit back).
 
 ## SETUP
-### For a Mac/Linux User:
+### For a Mac/Linux User
 
 > Refer to the image at the end of this section to verfiy each step.
 
@@ -58,12 +58,72 @@ pytest # Runs tests to check if everything is in order.
 python hangman/examples/PlaySimpleHangman.py
 ```
 
+8. Bonus - Try out the second example for a more engaging game:
+```bash
+python hangman/examples/PlayHangman.py
+```
+
 **Setup example**
 
 ![setup-example](images/setup-example.png)
 
+### For a Developer
+The main python code is `hangman/HangmanGame.py`. The python module consists of a single class: `HangmanGame`. This class contains all the methods needed to play the game. A '.txt' file contains the word bank used in the game (see `hangman/data/word_bank.txt`).
+
+#### Installing package
+1. Clone the repository on your device.
+```bash
+git clone https://github.com/radroid/Hangman.git
+```
+2. Open terminal and create a virtual environment. 
+
+> (Refer to the steps provided in the [Setup section](#setup)
+
+3. Use the following command to install package in the environment.
+```bash
+python setup.py install
+```
+*Note: ensure you are in the `Hangman` repo directory. When you list all the files and directories (using `ls`), you should see `setup.py`.*
+
+4. You can now import the package into your python program, create an instance and build a unique version of the hangman game.
+```python
+from hangman import HangmanGame
+
+# Instantiate the class.
+hangman_game = HangmanGame()
+
+# Start with a word.
+hangman_game.set_word()
+
+# Guess till you get it right or run out of guesses.
+while hangman_game.get_status() == 'guessing':
+    print(hangman_game.get_hangman())
+    print(hangman_game.get_position())
+    hangman_game.guess_letter()
+
+# Check the result of the game.
+if game.get_status() == 'won':
+    print('You won!')
+else:
+    print('You ran out of guesses.')
+    print(f'The word is: {hangman_game.get_word()}')
+```
+The above code (without any whitespaces and comments) is **12 lines long.**
+
+#### Code Review
+I would really appreciate any kind of feedback on the way I have chosen to tackle this problem. Keep in mind, I am a beginner and even a small piece of advice can go a long way. **Be as critical as you can!** Thank you for spending time to look at my code.
+
+The best way to start is by going through the example codes in `hangman/examples`.
+I would appreciate comments on anything and everything, but here are some to get you started:
+- Architecture or **Design** of the code.
+- Style and **Documentation**.
+- **Testing**: this one can be get time consuming compared to the others.
+
+You can refer to [this guide](https://www.kevinlondon.com/2015/05/05/code-review-best-practices.html) for advice on Code Reviews.
+
 
 ## SUPPORT
+I am looking for a job ooportunity in Canada. It would mean a lot if we could connect and discuss what we can do for each other.
 Follow and Reach out to me one of the following places!
 
 ![Github Follow](https://img.shields.io/github/followers/radroid?label=Follow&style=social) ![Twitter Follow](https://img.shields.io/twitter/follow/Raj_Dholakia001?label=Follow&style=social)
