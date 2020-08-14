@@ -4,10 +4,13 @@
 
 > One can create a simple version of hangman (using the package) with **less than 20 lines of code**
 
+[![Kill 'em](https://forthebadge.com/images/badges/oooo-kill-em.svg)](https://forthebadge.com) 
+[![Built with](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) 
+[![Makes People smile](https://forthebadge.com/images/badges/makes-people-smile.svg)](https://forthebadge.com)
+
 *Tags: hangman, simple hangman, hangman package, game, game package, play hangman.*
 
 ![Workflow build status](https://img.shields.io/github/workflow/status/radroid/Hangman/Python%20package?style=for-the-badge)
-![Top Language](https://img.shields.io/github/languages/top/radroid/Hangman?style=for-the-badge) 
 [![License](https://img.shields.io/github/license/radroid/Hangman?style=for-the-badge)](https://github.com/radroid/Hangman/blob/master/LICENSE) 
 ![Last Commit](https://img.shields.io/github/last-commit/radroid/Hangman?style=for-the-badge) 
 [![Open Pull Requests](https://img.shields.io/github/issues-pr/radroid/Hangman?style=for-the-badge)](https://github.com/radroid/Hangman/pulls) 
@@ -24,6 +27,7 @@
     * [For a Developer](#for-a-developer)
       * [Installing Hangman Package](#installing-hangman-package)
       * [Code Review](#code-review)
+* [Project Status](#project-status)
 * [Support](#support)
 * [License](#license)
 
@@ -131,6 +135,8 @@ I would appreciate comments on anything and everything, but here are some to get
 
 You can refer to [this guide](https://www.kevinlondon.com/2015/05/05/code-review-best-practices.html) for advice on Code Reviews.
 
+## Project Status
+I tried to follow all the best practices of building a project as a software developer. It has been the first step I have taken to understand the some of the techniques and using them in practice. For now, **I have acheived everything I wanted to from this project. If you have any other ideas we could work on, please let me know.**
 
 ## SUPPORT
 I am looking for a job ooportunity in Canada. It would mean a lot if we could connect and discuss what we can do for each other.
