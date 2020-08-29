@@ -139,7 +139,7 @@ You can refer to [this guide](https://www.kevinlondon.com/2015/05/05/code-review
 I tried to follow all the best practices of building a project as a software developer. It has been the first step I have taken to understand the some of the techniques and using them in practice. For now, **I have acheived everything I wanted to from this project. If you have any other ideas we could work on, please let me know.**
 
 ## SUPPORT
-I am looking for a job ooportunity in Canada. It would mean a lot if we could connect and discuss what we can do for each other.
+I am looking for a job ooportunity as a Software Developer and eventually Machine Learning Engineer in Canada. It would mean a lot if we could connect and discuss what we can do for each other.
 Follow and Reach out to me one of the following places!
 
 ![Github Follow](https://img.shields.io/github/followers/radroid?label=Follow&style=social) ![Twitter Follow](https://img.shields.io/twitter/follow/Raj_Dholakia001?label=Follow&style=social)
