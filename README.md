@@ -142,7 +142,7 @@ I tried to follow all the best practices of building a project as a software dev
 I am looking for a job ooportunity as a Software Developer and eventually Machine Learning Engineer in Canada. It would mean a lot if we could connect and discuss what we can do for each other.
 Follow and Reach out to me one of the following places!
 
-![Github Follow](https://img.shields.io/github/followers/radroid?label=Follow&style=social) ![Twitter Follow](https://img.shields.io/twitter/follow/Raj_Dholakia001?label=Follow&style=social)
+![Github Follow](https://img.shields.io/github/followers/radroid?label=Follow&style=social) ![Twitter Follow](https://img.shields.io/twitter/follow/Ra_Droid?label=Follow&style=social)
 
 
 ## LICENSE
