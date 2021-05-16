@@ -125,7 +125,7 @@ else:
 The above code (without any whitespaces and comments) is **12 lines long.**
 
 #### Code Review
-I would really appreciate any kind of feedback on the way I have chosen to tackle this problem. Keep in mind, I am a beginner and even a small piece of advice can go a long way. **Be as critical as you can!** Thank you for spending time to look at my code.
+I would really appreciate any kind of feedback on the way I have chosen to tackle this problem. I am a beginner, so even a small piece of advice can go a long way. Be as critical as you can! Thank you for spending time looking at my code.
 
 The best way to start is by going through the example codes in `hangman/examples`.
 I would appreciate comments on anything and everything, but here are some to get you started:
@@ -136,14 +136,12 @@ I would appreciate comments on anything and everything, but here are some to get
 You can refer to [this guide](https://www.kevinlondon.com/2015/05/05/code-review-best-practices.html) for advice on Code Reviews.
 
 ## Project Status
-I tried to follow all the best practices of building a project as a software developer. It has been the first step I have taken to understand the some of the techniques and using them in practice. For now, **I have acheived everything I wanted to from this project. If you have any other ideas we could work on, please let me know.**
+I tried to follow all the best practices of building a project as a software developer. This was the first step I took to understand some of the techniques and use them in practice. For now, I have acheived everything I wanted to from this project. If you have any other ideas we could work on, please [let me know](mailto:raj9dholakia@gmail.com).
 
 ## SUPPORT
-I am looking for a job ooportunity as a Software Developer and eventually Machine Learning Engineer in Canada. It would mean a lot if we could connect and discuss what we can do for each other.
-Follow and Reach out to me one of the following places!
+I am looking for a job opportunity as a Software Developer and eventually Machine Learning Engineer in Canada. It would mean a lot if we could connect and discuss what we can do for each other. Follow and reach out to me on one of the following places ⬇️
 
 ![Github Follow](https://img.shields.io/github/followers/radroid?label=Follow&style=social) ![Twitter Follow](https://img.shields.io/twitter/follow/Ra_Droid?label=Follow&style=social)
-
 
 ## LICENSE
 
